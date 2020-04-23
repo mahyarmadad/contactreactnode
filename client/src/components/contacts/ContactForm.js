@@ -30,7 +30,7 @@ const ContactForm = () => {
             <h2 className="text-primary">{current ? "Edit Contact" : "Add Contact"}</h2>
             <input type="text" placeholder="Name" name="name" value={name} onChange={onChange} />
             <input type="email" placeholder="Email Address" name="email" value={email} onChange={onChange} />
-            <input type="tel" name="phone" value={phone} onChange={onChange} placeholder="09**-111-1111" />
+            <input type="text" name="phone" value={phone} onChange={onChange} placeholder="09**-111-1111" />
             <h5>Contact Type</h5>
             <input type="radio" name="type" value="personal" checked={type === "personal"} onChange={onChange} /> Personal {' '}
             <input type="radio" name="type" value="professional" checked={type === "professional"} onChange={onChange} /> Professional {' '}

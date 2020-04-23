@@ -17,21 +17,26 @@ router.get("/", auth, async (req, res) => {
         res.send(500).send("Server Error");
     }
 });
+const errorFormatter = ({ msg }) => {
+    return `${msg}`;
+};
 
 //Get Toekn
 router.post("/", [check("email", "Please include a Valid Email").isEmail(),
 check("password", "Password Required ").exists()], async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+    const error = validationResult(req).formatWith(errorFormatter);
+    if (!error.isEmpty()) {
+        return res.status(400).json({ error: error.array() });
     }
     const { email, password } = req.body;
     try {
         let user = await User.findOne({ email });
+
         if (!user) {
             return res.status(400).json({ msg: "Invalid Credentials" });
         }
         const isMatch = await bcrypt.compare(password, user.password);
+
         if (!isMatch) {
             return res.status(400).json({ msg: "Invalid Credentials" });
         }
